@@ -1,4 +1,4 @@
-# Chiikawa Jokers!
+# The super awesome Chiikawa Mod!
 Bring the cute silly world of Chiikawa into Balatro ^__^
 
 Requires [Steammodded](https://github.com/Steamopollys/Steamodded)
