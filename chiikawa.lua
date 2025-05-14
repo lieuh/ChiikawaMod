@@ -21,12 +21,19 @@ SMODS.Atlas {
     py = 95
 }
 
+SMODS.Atlas {
+    key = "hachiware",
+    path = "hachiware.png",
+    px = 71,
+    py = 95
+}
+
 SMODS.Joker {
     key = "Chiikawa",
     loc_txt = {
         name = "Chiikawa",
         text = {
-            'Every played {C:attention}2{}',
+            'First played {C:attention}2{}',
             'permanently {S:1.2}doubles{}',
             'its chips when scored'
         }
@@ -48,7 +55,7 @@ SMODS.Joker {
     end,
     calculate = function(self, card, context)
         if context.individual and context.cardarea == G.play then
-            if context.other_card:get_id() == 2 then
+            if context.other_card:get_id() == 2 and G.GAME.current_round.hands_played == 0 then
                 if context.other_card.ability.perma_bonus <= 0 then context.other_card.ability.perma_bonus = 1 end
                 context.other_card.ability.perma_bonus = context.other_card.ability.perma_bonus * card.ability.extra
                 sendTraceMessage(tostring(context.other_card.ability.perma_bonus),"Chiikawa Joker")
@@ -67,15 +74,15 @@ SMODS.Joker {
     loc_txt = {
         name = "Usagi",
         text = {
-            'Every played {C:attention}Wheel of Fortune{}',
-            'adds a {C:attention}Steel Polychrome',
-            'King{} to the deck'
+            'Played {C:attention}Wheel of Fortune{}',
+            'adds a {C:attention}Red Seal Steel',
+            '{C:attention}King{} to the deck'
         }
     },
     atlas = "usagi",
     pos = {x=0, y=0},
     rarity = 2,
-    cost = 5,
+    cost = 7,
     unlocked = true,
     discovered = true,
     blueprint_compat = true,
@@ -97,7 +104,7 @@ SMODS.Joker {
 
                     _card:set_seal('Red', true)
                     _card:set_ability(G.P_CENTERS['m_steel'])
-                    _card:set_edition({ polychrome = true}, true)
+                    --_card:set_edition({ polychrome = true}, true)
                     assert(SMODS.change_base(_card, nil, 'King'))
 
                     return true
@@ -108,45 +115,53 @@ SMODS.Joker {
             end
         end
     }
-                --card_eval_status_text(self, 'extra',mmmmmmmm nil, nil, nil, {message = localize('k_plus_steel'), colour = G.C.SECONDARY_SET.Enhanced})
-                --
-                -- G.E_MANAGER:add_event(Event({
-                --     func = function() 
-                --         G.deck.config.card_limit = G.deck.config.card_limit + 1
-                --         return true
-                --     end}))
-                --     draw_card(G.play,G.deck, 90,'up', nil)  
 
-                --playing_card_joker_effects({true})
-            -- G.E_MANAGER:add_event(Event({
-            --     func = function() 
-            --         local front = pseudorandom_element(G.P_CARDS, pseudoseed('marb_fr'))
-            --         G.playing_card = (G.playing_card and G.playing_card + 1) or 1
-            --         local card = Card(G.play.T.x + G.play.T.w/2, G.play.T.y, G.CARD_W, G.CARD_H, front, G.P_CENTERS.m_stone, {playing_card = G.playing_card})
-            --         card:start_materialize({G.C.SECONDARY_SET.Enhanced})
-            --         G.play:emplace(card)
-            --         table.insert(G.playing_cards, card)
-            --         return true
-            --     end}))
-            -- card_eval_status_text(context.blueprint_card or self, 'extra', nil, nil, nil, {message = localize('k_plus_stone'), colour = G.C.SECONDARY_SET.Enhanced})
 
-            -- G.E_MANAGER:add_event(Event({
-            --     func = function() 
-            --         G.deck.config.card_limit = G.deck.config.card_limit + 1
-            --         return true
-            --     end}))
-            --     draw_card(G.play,G.deck, 90,'up', nil)  
-
-            -- playing_card_joker_effects({true})
-        
-            --{
-            --     message = localize('k_upgrade_ex'),
-            --     colour = G.C.CHIPS,
-            --     card = card
-            -- }
-
+SMODS.Joker {
+    key = "Hachiware",
+    loc_txt = {
+        name = "Hachiware",
+        text = {
+            'Gains {X:mult,C:white}X0.2{} Mult for each',
+            '{C:attention}8{} in your {C:attention}full deck',
+            '{C:inactive}(Currently {X:mult,C:white}X#1# {C:inactive} Mult)'
+        }
+    },
+    atlas = "hachiware",
+    pos = {x=0, y=0},
+    rarity = 2,
+    cost = 5,
+    unlocked = true,
+    discovered = true,
+    blueprint_compat = true,
+    eternal_compat = true,
+    perishable_compat = true,
+    config = {
+        extra = 0.2,
+    },
+    loc_vars = function(self, info_queue, cards)
+        local eight_tally = 0
+        if G.playing_cards then
+            for _, playing_card in ipairs(G.playing_cards) do
+                if playing_card:get_id() == 8 then eight_tally = eight_tally+1 end
+            end
+        end
+        cards.ability.xmult = cards.ability.extra * eight_tally
+        return {vars = { cards.ability.extra * eight_tally }}
+    end,
+    calculate = function(self, card, context)
+        if context.joker_main then
+            local eight_tally = 0
+            for _, playing_card in ipairs(G.playing_cards) do
+                if playing_card:get_id() == 8  then eight_tally = eight_tally + 1 end  
+            end
+            return {
+                Xmult = card.ability.extra * eight_tally
+            }
+        end
+    end
+}
 
 ----------------------------------------------
 ------------MOD CODE END----------------------
-    -- extra.chip_gain = joker itself gains chips
-    -- extra.chip = joker gives mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
+    -- mmmmmmmmmm
