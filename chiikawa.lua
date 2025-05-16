@@ -33,9 +33,9 @@ SMODS.Joker {
     loc_txt = {
         name = "Chiikawa",
         text = {
-            'First played {C:attention}2{}',
-            'permanently {S:1.2}doubles{}',
-            'its chips when scored'
+            'If the first played hand ',
+            'contains a {C:attention}2{}, permanently ',
+            '{S:1.2}double{} its chips when scored'
         }
     },
     atlas = "chiikawa",
