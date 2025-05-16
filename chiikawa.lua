@@ -122,7 +122,7 @@ SMODS.Joker {
     loc_txt = {
         name = "Hachiware",
         text = {
-            'Gains {X:mult,C:white}X0.2{} Mult for each',
+            'Gains {X:mult,C:white}X0.25{} Mult for each',
             '{C:attention}8{} in your {C:attention}full deck',
             '{C:inactive}(Currently {X:mult,C:white}X#1# {C:inactive} Mult)'
         }
@@ -137,7 +137,7 @@ SMODS.Joker {
     eternal_compat = true,
     perishable_compat = true,
     config = {
-        extra = 0.2,
+        extra = 0.25,
     },
     loc_vars = function(self, info_queue, cards)
         local eight_tally = 0
