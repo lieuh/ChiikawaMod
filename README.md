@@ -7,4 +7,4 @@ Requires [Steammodded](https://github.com/Steamopollys/Steamodded)
 2. Download ChiikawaMod.zip
 3. Unzip and place all files in C:/Users/your username/AppData/Roaming/Balatro/Mods/
 
-[TODO: add silly picture]
+![hubert](https://github.com/user-attachments/assets/89775648-6c88-4ffc-8552-b8e72c0daaee)
